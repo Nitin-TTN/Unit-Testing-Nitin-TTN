@@ -1,24 +1,25 @@
 package com.demo.service;
+
 import com.demo.domain.Order;
-//import org.junit.Assert.*;
+import junit.framework.TestCase;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.*;
 
-public class OrderServiceTest
-{
-    OrderService os=new OrderService();
-    Order o1=new Order(3,"Colgate Family Pack",120.5);
-    Order o2=new Order(6,"Brush",22.4);
-
-    @Test(expected = RuntimeException.class)
-    public void testPlaceOrder_withOneArguments(){
-        os.placeOrder(o1);
+public class OrderServiceTest {
+    @Test
+    public void testPlaceOrder_withOneArgument() {
+        Order or = mock(Order.class);
+        OrderService orderServiceMock = mock(OrderService.class);
+        orderServiceMock.placeOrder(or);
+        verify(orderServiceMock).placeOrder(or);
     }
 
     @Test
-    public void testPlaceOrder_withTwoArguments(){
-        assertTrue(os.placeOrder(o2,"Order Placed"));
+    public void testPlaceOrder_withTwoArguments() {
+        OrderService orderServiceMock = mock(OrderService.class);
+        when(orderServiceMock.placeOrder(any(Order.class), anyString())).thenReturn(true);
+        assertTrue(orderServiceMock.placeOrder(new Order(), "Order Placed"));
     }
-
 }

@@ -7,7 +7,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="unit-testing" />
-        <module name="Unit-Testing-Nitin-TTN" />
       </profile>
     </annotationProcessing>
   </component>

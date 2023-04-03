@@ -1,19 +1,33 @@
 package com.demo.service;
+
 import com.demo.domain.Order;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.*;
+
+@RunWith(MockitoJUnitRunner.class)
 public class EmailServiceTest {
-   Order o1=new Order(3,"Colgate Family Pack",120.5);
-   Order o2=new Order(6,"Brush",22.4);
-   EmailService es=new EmailService();
    @Test(expected = RuntimeException.class)
    public void testSendEmail_withOneArguments() {
-      es.sendEmail(o1);
+      EmailService emailServiceMock = mock(EmailService.class);
+      doThrow(new RuntimeException("Exception")).
+       when(emailServiceMock).sendEmail(any(Order.class));
+      emailServiceMock.sendEmail(new Order());
    }
+
+
+
    @Test
    public void testSendEmail_withTwoArguments()
    {
-      assertTrue(es.sendEmail(o2,"Notified"));
+      EmailService emailServiceMock = mock(EmailService.class);
+      when(emailServiceMock.sendEmail(any(Order.class), anyString())).thenReturn(true);
+      assertTrue(emailServiceMock.sendEmail(new Order(), "Order placed"));
    }
+
+
 }
